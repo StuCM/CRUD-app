@@ -2,7 +2,6 @@
   <nav>
     <ul>
       <li><RouterLink to="/">Home</RouterLink></li>
-      <li><RouterLink to="/user">User</RouterLink></li>
       <li><RouterLink to="/add">Add User</RouterLink></li>
     </ul>
   </nav>
