@@ -69,15 +69,17 @@ const editUser = (id) => {
 
 <style lang="scss">
 main {
-    width: 800px;
+    width: 100%;
     display: flex;
+    padding: 0 2rem;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
 }
 .table-container {
     max-height: 550px;
     overflow-y: auto;
+    width: 100%;
 }
 table {
     min-width: 100%;
@@ -91,10 +93,12 @@ table {
         background-color: #464646;
         color: white;
         padding: 1rem;
+        text-align: left;
     }
     td {
         padding: 1rem;
         border-bottom: 1px solid #f1f1f1;
+        text-align: left;
     }
     tr {
         width: 100%;
