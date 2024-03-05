@@ -12,7 +12,7 @@ const customer = reactive({
     active: true
 });
 
-const error = reactive({
+const errorMessage = reactive({
     name: '',
     email: '',
     phone: ''
@@ -28,7 +28,7 @@ const route = useRoute();
 watch(customer, (newValue) => {
     Object.keys(newValue).forEach((key) => {
         if (newValue[key] !== '') {
-            error[key] = '';
+            errorMessage[key] = '';
         }
     });
 });
@@ -45,7 +45,7 @@ onMounted(() => {
 });
 
 const loadCustomer = async () => {
-    if (route.params.id) {
+    if (useRoute().params.id) {
         const currentCustomer = await getCustomerById(useRoute().params.id);
         customer.id = currentCustomer.id;
         customer.name = currentCustomer.name;
@@ -60,13 +60,13 @@ const loadCustomer = async () => {
 
 const validateForm = () => {
     if (!customer.name) {
-        error.name = 'Name is required';
+        errorMessage.name = 'Name is required';
     }
     if (!customer.email) {
-        error.email = 'Email is required';
+        errorMessage.email = 'Email is required';
     }
     if (!customer.phone) {
-        error.phone = 'Phone is required';
+        errorMessage.phone = 'Phone is required';
     }
 };
 
@@ -84,9 +84,9 @@ const resetInputs = () => {
     customer.name = '';
     customer.email = '';
     customer.phone = '';
-    error.name = '';
-    error.email = '';
-    error.phone = '';
+    errorMessage.name = '';
+    errorMessage.email = '';
+    errorMessage.phone = '';
     isEdit.value = false;
 };
 
@@ -120,7 +120,7 @@ const onCancel = () => {
         </Transition>
         <form @submit="onSubmit">
             <label for="name">Name:</label>
-            <p class="error" v-if="error.name">{{ error.name }}</p>
+            <p class="error" v-if="errorMessage.name">{{ errorMessage.name }}</p>
             <input
                 id="name"
                 type="text"
@@ -130,7 +130,7 @@ const onCancel = () => {
             />
 
             <label for="email">Email:</label>
-            <p class="error" v-if="error.email">{{ error.email }}</p>
+            <p class="error" v-if="errorMessage.email">{{ errorMessage.email }}</p>
             <input
                 id="email"
                 type="email"
@@ -140,7 +140,7 @@ const onCancel = () => {
             />
 
             <label for="phone">Phone:</label>
-            <p class="error" v-if="error.phone">{{ error.phone }}</p>
+            <p class="error" v-if="errorMessage.phone">{{ errorMessage.phone }}</p>
             <input
                 id="phone"
                 type="tel"
