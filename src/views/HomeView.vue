@@ -1,31 +1,45 @@
 <script setup>
-import { getAllCustomers } from '@/services/CustomerDataService';
-import { onMounted, ref } from 'vue';
+import { getAllCustomers } from '@/services/CustomerDataService'
+import { onMounted, ref } from 'vue'
 
-const customers = ref([]);
+const customers = ref([])
 
 onMounted(async () => {
-  customers.value = await getAllCustomers();
-  console.log(customers.value);
-});
+  customers.value = await getAllCustomers()
+  console.log(customers.value)
+})
+
+const getCustomersByName = async (event) => {
+  if (event.target.value === '') customers.value = await getAllCustomers();
+  else {
+    customers.value = customers.value.filter((customer) => {
+      return customer.name.includes(event.target.value)
+    })
+  }
+}
 </script>
 
 <template>
   <main>
-      <table>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Active</th>
-        </tr>
-        <tr v-for="customer in customers" :key="customer.id">
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>{{ customer.active }}</td>
-        </tr>
-      </table>
+    <div class="search-container" @input="getCustomersByName">
+      <input type="text" placeholder="Search" />
+    </div>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Active</th>
+      </tr>
+      <tr v-for="customer in customers" :key="customer.id">
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.active }}</td>
+      </tr>
+    </table>
+
   </main>
 </template>
 
@@ -53,6 +67,17 @@ table {
     &:hover {
       background-color: #f1f1f1;
     }
+  }
+}
+
+.search-container {
+
+  input {
+    padding: 1rem;
+    min-width: 300px;
+    border: 1px solid #bbbbbb;
+    border-radius: 40px;
+    margin-bottom: 1rem;
   }
 }
 </style>
