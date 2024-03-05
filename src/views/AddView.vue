@@ -15,6 +15,7 @@ const error = reactive({
   phone: ''
 })
 
+//remove error message when input is not empty
 watch(customer, (newValue) => {
   Object.keys(newValue).forEach((key) => {
     if (newValue[key] !== "") {
