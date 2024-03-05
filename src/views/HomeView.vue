@@ -1,6 +1,8 @@
 <script setup>
-import { getAllCustomers } from '@/services/CustomerDataService'
+import { getAllCustomers, deleteCustomer } from '@/services/CustomerDataService'
 import { onMounted, ref } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const customers = ref([])
 
@@ -17,6 +19,14 @@ const getCustomersByName = async (event) => {
     })
   }
 }
+
+const deleteUser = (id) => {
+  customers.value = customers.value.filter((customer) => {
+    return customer.id !== id
+  })
+  deleteCustomer(id);
+}
+
 </script>
 
 <template>
@@ -31,12 +41,24 @@ const getCustomersByName = async (event) => {
         <th>Email</th>
         <th>Phone</th>
         <th>Active</th>
+        <th>Actions</th>
+
       </tr>
       <tr v-for="customer in customers" :key="customer.id">
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
         <td>{{ customer.active }}</td>
+        <td>
+          <button class="icon-button">
+            <FontAwesomeIcon class="icon icon-edit" :icon="faEdit" />
+          </button>
+          <button class="icon-button" @click="deleteUser(customer.id)">
+            <FontAwesomeIcon class="icon icon-trash" :icon="faTrash" />
+          </button>
+          
+        </td>
+        <td></td>
       </tr>
     </table>
 
@@ -71,13 +93,29 @@ table {
 }
 
 .search-container {
-
   input {
     padding: 1rem;
     min-width: 300px;
     border: 1px solid #bbbbbb;
     border-radius: 40px;
     margin-bottom: 1rem;
+  }
+}
+
+.icon {
+  cursor: pointer;
+  margin: 0 0.75rem;
+  &.icon-edit {
+    color: #1795c7;
+    &:hover {
+    color: #137aa3
+  }
+  }
+  &.icon-trash {
+    color: #e61313;
+    &:hover {
+      color: #be1010;
+    }
   }
 }
 </style>

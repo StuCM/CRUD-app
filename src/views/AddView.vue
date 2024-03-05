@@ -113,4 +113,19 @@ main {
   margin: 0rem 0 0 0.5rem;
   font-size: 0.8rem;
 }
+
+button {
+  padding: 10px 20px;
+  margin: 1rem;
+  border: none;
+  border-radius: 40px;
+  background-color: hsla(160, 100%, 37%, 1);
+  color: white;
+  cursor: pointer;
+  transition: 0.4s;
+  font-size: 1rem;
+  &:hover {
+    background-color: hsla(160, 100%, 27%, 1);
+  }
+}
 </style>

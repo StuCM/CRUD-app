@@ -1,25 +1,32 @@
 {
   "customers": [
     {
-      "id": 1,
+      "id": "1",
       "name": "John Doe",
       "email": "johndoe@hotmail.com",
       "phone": "01234-098462",
       "active": "true"
     },
     {
-        "id": 2,
-        "name": "Jane Smith",
-        "email": "janesmith@hotmail.com",
-        "phone": "01234-567890",
-        "active": "true"
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "janesmith@hotmail.com",
+      "phone": "01234-567890",
+      "active": "true"
     },
     {
-        "id": 3,
-        "name": "Alex Johnson",
-        "email": "alexjohnson@hotmail.com",
-        "phone": "01456-722345",
-        "active": "false"
+      "id": "3",
+      "name": "Alex Johnson",
+      "email": "alexjohnson@hotmail.com",
+      "phone": "01456-722345",
+      "active": "false"
+    },
+    {
+      "id": "78b5",
+      "name": "Stuart Marshall",
+      "email": "stuart.marshall@flaxandteal.co.uk",
+      "phone": "07865595566",
+      "active": true
     }
   ]
 }
