@@ -1,5 +1,13 @@
 <script setup>
+import { getAllCustomers } from '@/services/CustomerDataService';
+import { onMounted, ref } from 'vue';
 
+const customers = ref([]);
+
+onMounted(async () => {
+  customers.value = await getAllCustomers();
+  console.log(customers.value);
+});
 </script>
 
 <template>
@@ -10,6 +18,12 @@
           <th>Email</th>
           <th>Phone</th>
           <th>Active</th>
+        </tr>
+        <tr v-for="customer in customers" :key="customer.id">
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.active }}</td>
         </tr>
       </table>
   </main>
