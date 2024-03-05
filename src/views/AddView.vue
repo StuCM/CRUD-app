@@ -1,13 +1,115 @@
-<template>
-    <div>
-        Add View
-    </div>
-</template>
-
 <script setup>
+import { reactive, watch } from 'vue'
+import { addCustomer } from '@/services/CustomerDataService'
 
+const customer = reactive({
+  name: '',
+  email: '',
+  phone: '',
+  active: true
+})
+
+const error = reactive({
+  name: '',
+  email: '',
+  phone: ''
+})
+
+watch(customer, (newValue) => {
+  Object.keys(newValue).forEach((key) => {
+    if (newValue[key] !== "") {
+      error[key] = ''
+    }
+  })
+})
+
+const validateForm = () => {
+  if (!customer.name) {
+    error.name = 'Name is required'
+  }
+  if (!customer.email) {
+    error.email = 'Email is required'
+  }
+  if (!customer.phone) {
+    error.phone = 'Phone is required'
+  }
+}
+
+const addUser = async () => {
+  await addCustomer(customer)
+}
+
+const resetInputs = () => {
+  customer.name = ''
+  customer.email = ''
+  customer.phone = ''
+  error.name = ''
+  error.email = ''
+  error.phone = ''
+}
+
+const onSubmit = (event) => {
+  event.preventDefault()
+  validateForm()
+  if (customer.name && customer.email && customer.phone) {
+    addUser()
+    resetInputs()
+  }
+}
 </script>
 
-<style lang="scss" scoped>
+<template>
+  <main>
+    <form @submit="onSubmit">
+      <label for="name">Name:</label>
+      <p class="error" v-if="error.name">{{ error.name }}</p>
+      <input id="name" type="text" name="name" v-model="customer.name" placeholder="Full Name" />
 
+      <label for="email">Email:</label>
+      <p class="error" v-if="error.email">{{ error.email }}</p>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        v-model="customer.email"
+        placeholder="Enter your email"
+      />
+
+      <label for="phone">Phone:</label>
+      <p class="error" v-if="error.phone">{{ error.phone }}</p>
+      <input id="phone" type="tel" name="phone" v-model="customer.phone" placeholder="Phone" />
+
+      <button type="submit">Submit</button>
+    </form>
+  </main>
+</template>
+
+<style lang="scss" scoped>
+main {
+  width: 800px;
+  height: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    label {
+      margin: 1rem 0 0.5rem 0.5rem;
+      font-size: 1rem;
+    }
+    input {
+      padding: 0.75rem 1rem;
+      min-width: 400px;
+      border: 1px solid #bbbbbb;
+      border-radius: 40px;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.error {
+  color: red;
+  margin: 0rem 0 0 0.5rem;
+  font-size: 0.8rem;
+}
 </style>
