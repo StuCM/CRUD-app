@@ -20,6 +20,7 @@ const error = reactive({
 const isEdit = ref(false);
 
 const router = useRouter();
+const route = useRoute();
 
 //remove error message when input is not empty
 watch(customer, (newValue) => {
@@ -30,8 +31,16 @@ watch(customer, (newValue) => {
   })
 })
 
-onMounted(async () => {
-  if (useRoute().params.id) {
+watch(() => route.params.id, async () => {
+    await loadCustomer();
+})
+
+onMounted(() => {
+  loadCustomer();
+})
+
+const loadCustomer = (async () => {
+  if (route.params.id) {
     const currentCustomer = await getCustomerById(useRoute().params.id)
     customer.id = currentCustomer.id
     customer.name = currentCustomer.name
@@ -39,6 +48,8 @@ onMounted(async () => {
     customer.phone = currentCustomer.phone
     customer.active = currentCustomer.active
     isEdit.value = true;
+  } else {
+    resetInputs();
   }
 });
 
@@ -65,6 +76,7 @@ const resetInputs = () => {
   error.name = ''
   error.email = ''
   error.phone = ''
+  isEdit.value = false;
 }
 
 const onSubmit = (event) => {
