@@ -66,7 +66,12 @@ const validateForm = () => {
 }
 
 const addUser = async () => {
-  await addCustomer(customer)
+    const newCustomer = {
+        name: customer.name,
+        email: customer.email,
+        phone: customer.phone,
+        active: true}
+  await addCustomer(newCustomer)
 }
 
 const resetInputs = () => {
@@ -117,7 +122,7 @@ const onCancel = () => {
 
       <label for="phone">Phone:</label>
       <p class="error" v-if="error.phone">{{ error.phone }}</p>
-      <input id="phone" type="tel" name="phone" v-model="customer.phone" placeholder="Phone" />
+      <input id="phone" type="tel" name="phone" v-model="customer.phone" placeholder="Phone" minlength="6"/>
 
       <button v-if="!isEdit" type="submit">Submit</button>
       <div v-else>
