@@ -13,7 +13,7 @@ const getCustomersByName = async (event) => {
   if (event.target.value === '') customers.value = await getAllCustomers();
   else {
     customers.value = customers.value.filter((customer) => {
-      return customer.name.includes(event.target.value)
+      return customer.name.toLowerCase().includes(event.target.value.toLowerCase())
     })
   }
 }
