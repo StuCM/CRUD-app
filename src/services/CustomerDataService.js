@@ -5,7 +5,7 @@ export async function getAllCustomers() {
     } catch (error) {
         console.error('Error:', error);
     }
-};
+}
 
 export async function getCustomerById(id) {
     try {
@@ -14,7 +14,7 @@ export async function getCustomerById(id) {
     } catch (error) {
         console.error('Error:', error);
     }
-};
+}
 
 export async function addCustomer(customer) {
     try {
@@ -29,7 +29,7 @@ export async function addCustomer(customer) {
     } catch (error) {
         console.error('Error:', error);
     }
-};
+}
 
 export async function updateCustomer(customer) {
     try {
@@ -44,7 +44,7 @@ export async function updateCustomer(customer) {
     } catch (error) {
         console.error('Error:', error);
     }
-};
+}
 
 export async function deleteCustomer(id) {
     try {
@@ -55,4 +55,4 @@ export async function deleteCustomer(id) {
     } catch (error) {
         console.error('Error:', error);
     }
-};
+}
