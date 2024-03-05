@@ -1,15 +1,20 @@
+<script setup>
+import {RouterLink} from 'vue-router'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+</script>
+
 <template>
   <nav>
     <ul>
       <li><RouterLink to="/">Home</RouterLink></li>
-      <li><RouterLink to="/add">Add User</RouterLink></li>
+      <li><RouterLink to="/add">
+        <FontAwesomeIcon class="icon" :icon="faPlus" />
+        Add Customer
+      </RouterLink></li>
     </ul>
   </nav>
 </template>
-
-<script setup>
-import {RouterLink} from 'vue-router'
-</script>
 
 <style lang="scss" scoped>
 nav {
@@ -31,10 +36,15 @@ nav {
         margin-left: 1.5rem;
         font-size: 1rem;
         &:hover {
-          color: #f1f1f1;
+          color: #888888;
         }
       }
     }
   }
+}
+
+.icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem
 }
 </style>
