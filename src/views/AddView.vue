@@ -1,8 +1,10 @@
 <script setup>
-import { reactive, watch } from 'vue'
-import { addCustomer } from '@/services/CustomerDataService'
+import { onMounted, reactive, watch, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
+import { addCustomer, getCustomerById, updateCustomer } from '@/services/CustomerDataService'
 
 const customer = reactive({
+    id: '',
   name: '',
   email: '',
   phone: '',
@@ -15,6 +17,10 @@ const error = reactive({
   phone: ''
 })
 
+const isEdit = ref(false);
+
+const router = useRouter();
+
 //remove error message when input is not empty
 watch(customer, (newValue) => {
   Object.keys(newValue).forEach((key) => {
@@ -23,6 +29,18 @@ watch(customer, (newValue) => {
     }
   })
 })
+
+onMounted(async () => {
+  if (useRoute().params.id) {
+    const currentCustomer = await getCustomerById(useRoute().params.id)
+    customer.id = currentCustomer.id
+    customer.name = currentCustomer.name
+    customer.email = currentCustomer.email
+    customer.phone = currentCustomer.phone
+    customer.active = currentCustomer.active
+    isEdit.value = true;
+  }
+});
 
 const validateForm = () => {
   if (!customer.name) {
@@ -53,9 +71,18 @@ const onSubmit = (event) => {
   event.preventDefault()
   validateForm()
   if (customer.name && customer.email && customer.phone) {
-    addUser()
-    resetInputs()
+    if(!isEdit.value){
+        addUser()
+        resetInputs()
+    } else {
+        updateCustomer(customer);
+        router.push({ name: 'home' })
+    }
   }
+}
+
+const onCancel = () => {
+  router.push({ name: 'home' })
 }
 </script>
 
@@ -80,7 +107,11 @@ const onSubmit = (event) => {
       <p class="error" v-if="error.phone">{{ error.phone }}</p>
       <input id="phone" type="tel" name="phone" v-model="customer.phone" placeholder="Phone" />
 
-      <button type="submit">Submit</button>
+      <button v-if="!isEdit" type="submit">Submit</button>
+      <div v-else>
+        <button type="submit">Save</button>
+        <button @click="onCancel">Cancel</button>
+      </div>
     </form>
   </main>
 </template>

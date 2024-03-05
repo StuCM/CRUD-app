@@ -3,6 +3,7 @@ import { getAllCustomers, deleteCustomer } from '@/services/CustomerDataService'
 import { onMounted, ref } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'vue-router';
 
 const customers = ref([])
 
@@ -25,6 +26,13 @@ const deleteUser = (id) => {
     return customer.id !== id
   })
   deleteCustomer(id);
+}
+
+const router = useRouter();
+
+const editUser = (id) => {
+  console.log(id)
+  router.push({ name: 'add', params: { id } })
 }
 
 </script>
@@ -50,7 +58,7 @@ const deleteUser = (id) => {
         <td>{{ customer.phone }}</td>
         <td>{{ customer.active }}</td>
         <td>
-          <button class="icon-button">
+          <button class="icon-button" @click="editUser(customer.id)">
             <FontAwesomeIcon class="icon icon-edit" :icon="faEdit" />
           </button>
           <button class="icon-button" @click="deleteUser(customer.id)">

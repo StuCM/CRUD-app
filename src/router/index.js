@@ -15,9 +15,10 @@ const router = createRouter({
       component: () => import('../views/UserView.vue')
     },
     {
-      path: '/add',
+      path: '/add/:id?',
       name: 'add',
-      component: () => import('../views/AddView.vue')
+      component: () => import('../views/AddView.vue'),
+      props: true
     }
   ]
 })
